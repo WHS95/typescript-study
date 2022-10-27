@@ -12,22 +12,23 @@
     }
     type loginResult = successResult | failResult;
 
-    function login():loginResult{
-        return{
-            result:"success",
-            response:{
-                body:'login success'
-            }
-        }
-    }
+    // function login():loginResult{
+    //     return{
+    //         result:"success",
+    //         response:{
+    //             body:'login success'
+    //         }
+    //     }
+    // }
+
     //printLoginState(state: loginResult)
     //success -> body
     //fail -> reason
-    function printLoginState(state:loginResult){
-        if(state.result === 'success'){
-            console.log(`${state.response.body}`);
-        } else {
-            console.log(`${state.reason}`);
-        }
-    }
+    // function printLoginState(state:loginResult){
+    //     if(state.result === 'success'){
+    //         console.log(`${state.response.body}`);
+    //     } else {
+    //         console.log(`${state.reason}`);
+    //     }
+    // }
 }
