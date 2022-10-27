@@ -20,7 +20,6 @@
             }
         }
     }
-
     //printLoginState(state: loginResult)
     //success -> body
     //fail -> reason
