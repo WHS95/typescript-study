@@ -21,10 +21,10 @@
 //     }
 // }
 
-type Command ='add' | 'substract' |  'multiply' |  'divide' |  'remainder' 
+type Command2 = 'add' | 'substract' |  'multiply' |  'divide' |  'remainder' 
 
-function calculate(command:Command, a:number, b:number):number{
-    switch(command){
+function calculate(command:Command2, a:number, b:number):number{
+    switch(command){//케이스가 많은 경우에는  if else 보다는 switch가 가독성이 더 좋다.
         case "add":
             return a + b
         case "substract":
@@ -35,7 +35,7 @@ function calculate(command:Command, a:number, b:number):number{
             return a / b
         case "remainder":
             return a % b
-        default:
+        default://원하는 파라미터가 안들어올경우에 대한 처리를하자
             throw Error('unknownCommand')
     };
 };
