@@ -42,4 +42,33 @@
   }
   const maker = CoffeMaker.makeMachine(32);
   maker.fillCoffeeBeans(32);
+
+  class UserInformation {
+    constructor(private firstName: string, private lastName: string) {}
+
+    get fullName(): string {
+      return `${this.firstName} ${this.lastName}`;
+    }
+
+    private internalAge = 4;
+
+    get age(): number {
+        console.log("get이 작동");
+      return this.internalAge;
+    }
+
+    set age(num: number) {
+        console.log("set이 작동");
+        
+        if(num<0){
+            throw new Error('num is not under 0')
+        }
+      this.internalAge = num;
+    }
+  }
+  const userInformation = new UserInformation("steve", "jobs");
+  console.log(userInformation);
+  console.log(userInformation.age);
+  console.log(userInformation.age = 7);
+  
 }
