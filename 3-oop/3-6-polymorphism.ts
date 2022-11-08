@@ -1,12 +1,42 @@
 {
   type CoffeeCup = {
     shots: number;
-    hasMilk: boolean;
+    hasMilk?: boolean;
+    hasSugar?: boolean;
   };
 
   interface CoffeeMaker {
     //명세서와 같은 것
     makeCoffee(shots: number): CoffeeCup;
+  }
+
+  //싸구려 우유 거품기
+  class CheapMilkSteamer {
+    private steamMilk(): void {
+      console.log("Steam some milk..");
+    }
+    makemilk(cup: CoffeeCup): CoffeeCup {
+      this.steamMilk();
+      return {
+        ...cup,
+        hasMilk: true,
+      };
+    }
+  }
+
+  //설탕 제조기
+  class AutomaticSugarMixer {
+    private getSugar() {
+      console.log("getting some sugar from candy");
+      return true;
+    }
+    addSugar(cup: CoffeeCup): CoffeeCup {
+      const sugar = this.getSugar();
+      return {
+        ...cup,
+        hasSugar: sugar,
+      };
+    }
   }
 
   class CoffeMachine implements CoffeeMaker {
@@ -63,29 +93,44 @@
   }
 
   class CaffeLateMachine extends CoffeMachine {
-    constructor(beans: number, public serialNumber: string) {
+    constructor(
+      beans: number,
+      public readonly serialNumber: string,
+      private milkFother: CheapMilkSteamer
+    ) {
       super(beans);
-    }
-    private steamMilk(): void {
-      console.log("Steaming milk..");
     }
     makeCoffee(shots: number): CoffeeCup {
       const coffee = super.makeCoffee(shots);
-      this.steamMilk();
-      return {
-        ...coffee,
-        hasMilk: true,
-      };
+      return this.milkFother.makemilk(coffee);
     }
   }
 
-  const machine = new CoffeMachine(43);
-  const latteMachine = new CaffeLateMachine(20,"SSS");
-  const coffee = latteMachine.makeCoffee(2);
-  console.log(coffee);
-  console.log(latteMachine.serialNumber);
+  class SweetCoffeeMachine extends CoffeMachine {
+    constructor(private beans: number, private sugar: AutomaticSugarMixer) {
+      super(beans);
+    }
+    makeCoffee(shots: number): CoffeeCup {
+      const coffee = super.makeCoffee(shots);
+      return this.sugar.addSugar(coffee);
+    }
+  }
 
-  //https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/super
-  //super 키워드는 부모 오브젝트의 함수를 호출할 때 사용됩니다.
-  
+  class SweetCaffeLatteMachine extends CoffeMachine {
+    constructor(
+      private beans: number,
+      private milk: CheapMilkSteamer,
+      private sugar: AutomaticSugarMixer
+    ) {
+      super(beans);
+    }
+    makeCoffee(shots: number): CoffeeCup {
+      const coffee = super.makeCoffee(shots);
+      const sugarAdded = this.sugar.addSugar(coffee);
+      return this.milk.makemilk(sugarAdded);
+    }
+  }
+
+  const SweetCaffeLatte = SweetCaffeLatteMachine.makeMachine(30);
+  console.log(SweetCaffeLatte.makeCoffee(2));
 }
