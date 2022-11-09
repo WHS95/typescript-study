@@ -56,7 +56,6 @@
     private steamMilk(): void {
       console.log("Steaming some milk... 🥛");
     }
-
     protected extract(shots: number): CoffeeCup {
       this.steamMilk();
       return {
