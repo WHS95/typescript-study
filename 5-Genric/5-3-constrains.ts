@@ -35,4 +35,4 @@ kim.workPartTime();
 
 const alexAfterPay = pay(alex);
 const kimAfterPay = pay(kim);
-alexAfterPay.pay;
+alexAfterPay.workFullTime;
